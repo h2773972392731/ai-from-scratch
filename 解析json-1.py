@@ -8,4 +8,5 @@ data = json.loads(json_str)
 
 print(type(data))
 
+print(data[0]['vname'])
 print(data[1]['vname'])
