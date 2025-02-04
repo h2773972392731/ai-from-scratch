@@ -1,2 +1,2 @@
-Python学习
+python学习
 pandas学习
