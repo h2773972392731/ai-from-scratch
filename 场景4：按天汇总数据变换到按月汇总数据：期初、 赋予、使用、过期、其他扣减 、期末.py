@@ -1,7 +1,7 @@
 import pandas as pd
 
 # 读取Excel文件
-file_path = "xlsx/执行结果1 - 2025-02-06T171003.076.xlsx"  # 替换为实际文件路径
+file_path = "xlsx/2024年按天汇总数据.xlsx"  # 替换为实际文件路径
 sheet_name = "SheetJS"  # 根据metadata.sheet_name指定
 
 # 读取指定工作表数据
@@ -52,4 +52,4 @@ result = result[["月份", "赋予", "使用", "过期", "其他扣减", "期末
 print(result)
 
 # 可选：保存到新Excel文件
-result.to_excel("xlsx/执行结果1 - 2025-02-06T171003.076_output.xlsx", index=False)
+result.to_excel("xlsx/2024年按月汇总数据_output.xlsx", index=False)
