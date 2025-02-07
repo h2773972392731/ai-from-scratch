@@ -1,5 +1,7 @@
 import pandas as pd
 
+# 参考：3.审计\2024.12.03_天健审计\2025.01.07_老夏版本积分变动明细数据和积分成本查询页面数据匹配\积分成本查询页面数据生成SQL
+
 # 读取Excel文件
 file_path = "xlsx/2024年按天汇总数据.xlsx"  # 替换为实际文件路径
 sheet_name = "SheetJS"  # 根据metadata.sheet_name指定
