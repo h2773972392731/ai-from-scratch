@@ -34,7 +34,7 @@ def get_month_end(col):
 
 # 执行聚合计算
 result = grouped.agg({
-    "期初": get_month_start("期初"),
+    # "期初": get_month_start("期初"),
     "赋予": "sum",
     "使用": "sum",
     "过期": "sum",
@@ -45,7 +45,8 @@ result = grouped.agg({
 # 重置索引并格式化
 result = result.reset_index()
 result["月份"] = result["日期"].dt.strftime("%Y-%m")
-result = result[["月份", "期初", "赋予", "使用", "过期", "其他扣减", "期末"]]
+# result = result[["月份", "期初", "赋予", "使用", "过期", "其他扣减", "期末"]]
+result = result[["月份", "赋予", "使用", "过期", "其他扣减", "期末"]]
 
 # 输出结果
 print(result)
