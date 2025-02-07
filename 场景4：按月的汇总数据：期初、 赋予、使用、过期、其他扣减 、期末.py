@@ -1,47 +1,54 @@
 import pandas as pd
 
-# 读取数据（假设数据已加载到DataFrame df中）
-# 示例数据加载（根据实际数据来源调整）：
-data = [
-    # 这里替换为实际数据，格式如：
-    ["2024-01-01", 10420539.21, 1300495.13, 325448.45, 54268.91, 27089.01, 11314227.97],
-    ["2024-01-02", 11314227.97, 346164.54, 225737.21, 27140.63, 29173.58, 11378341.09]
-    # ...
-]
-columns = ["日期", "期初", "赋予", "使用", "过期", "其他扣减", "期末"]
-df = pd.DataFrame(data, columns=columns)
+# 读取Excel文件
+file_path = "xlsx/执行结果1 - 2025-02-06T171003.076.xlsx"  # 替换为实际文件路径
+sheet_name = "SheetJS"  # 根据metadata.sheet_name指定
 
-# 转换日期列为datetime类型
+# 读取指定工作表数据
+df = pd.read_excel(file_path,
+                   sheet_name=sheet_name,
+                   skiprows=2,  # 跳过前两行非数据行(根据实际文件结构调整)
+                   usecols="A:G"  # 读取A到G列
+                   )
+
+# 重命名列（根据实际列名调整）
+df.columns = ["日期", "期初", "赋予", "使用", "过期", "其他扣减", "期末"]
+
+# 转换日期格式
 df["日期"] = pd.to_datetime(df["日期"])
 
 # 按月份分组
-grouped = df.groupby(pd.Grouper(key="日期", freq="M"))
+grouped = df.groupby(pd.Grouper(key="日期", freq="ME"))
 
-# 定义聚合函数
-def get_first_day_value(series):
-    """获取当月第一天的值"""
-    first_day = series.index.min().replace(day=1)
-    return series.loc[first_day] if first_day in series.index else None
 
-def get_last_day_value(series):
-    """获取当月最后一天的值"""
-    return series.iloc[-1] if not series.empty else None
+# 定义聚合逻辑
+def get_month_start(col):
+    """获取每月第一天的值"""
+    return lambda x: x.loc[x.index.min().replace(day=1)] if not x.empty else None
 
-# 执行聚合操作
+
+def get_month_end(col):
+    """获取每月最后一天的值"""
+    return lambda x: x.iloc[-1] if not x.empty else None
+
+
+# 执行聚合计算
 result = grouped.agg({
-    "期初": lambda x: get_first_day_value(df.set_index("日期")["期初"]),
+    "期初": get_month_start("期初"),
     "赋予": "sum",
     "使用": "sum",
     "过期": "sum",
     "其他扣减": "sum",
-    "期末": lambda x: get_last_day_value(df.set_index("日期")["期末"])
-}).reset_index()
+    "期末": get_month_end("期末")
+})
 
-# 重命名列并格式化日期
-result = result.rename(columns={"日期": "月份"})
-result["月份"] = result["月份"].dt.strftime("%Y-%m")
-
-# 确保列顺序
+# 重置索引并格式化
+result = result.reset_index()
+result["月份"] = result["日期"].dt.strftime("%Y-%m")
 result = result[["月份", "期初", "赋予", "使用", "过期", "其他扣减", "期末"]]
 
+# 输出结果
 print(result)
+
+# 可选：保存到新Excel文件
+result.to_excel("xlsx/执行结果1 - 2025-02-06T171003.076_output.xlsx", index=False)
