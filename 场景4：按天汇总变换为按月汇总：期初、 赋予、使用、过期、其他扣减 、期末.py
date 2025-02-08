@@ -1,57 +1,49 @@
 import pandas as pd
 
-# 参考：3.审计\2024.12.03_天健审计\2025.01.07_老夏版本积分变动明细数据和积分成本查询页面数据匹配\积分成本查询页面数据生成SQL\【积分成本查询】2024年按月汇总数据\*.*
+# 需求：按月求和赋予、使用、过期、其他扣减，期初用当月第一天的期初值，期末用当月最后一天的期末值
+# 参考：3.审计\2024.12.03_天健审计\2025.01.07_老夏版本积分变动明细数据和积分成本查询页面数据匹配\积分成本查询页面数据生成SQL\【积分成本查询页面】2024年按月汇总数据\*.*
 
-# 读取Excel文件
-file_path = "xlsx/2024年按天汇总数据.xlsx"  # 替换为实际文件路径
-sheet_name = "SheetJS"  # 根据metadata.sheet_name指定
+# 读取文件
+excel_file = pd.ExcelFile('xlsx/2024年按天汇总数据.xlsx')
 
-# 读取指定工作表数据
-df = pd.read_excel(file_path,
-                   sheet_name=sheet_name,
-                   skiprows=2,  # 跳过前两行非数据行(根据实际文件结构调整)
-                   usecols="A:G"  # 读取A到G列
-                   )
+# 获取所有表名
+sheet_names = excel_file.sheet_names
+print(sheet_names)
 
-# 重命名列（根据实际列名调整）
-df.columns = ["日期", "期初", "赋予", "使用", "过期", "其他扣减", "期末"]
+# 获取指定工作表中的数据
+df = excel_file.parse('SheetJS')
 
-# 转换日期格式
-df["日期"] = pd.to_datetime(df["日期"])
+# 查看数据的基本信息
+print('数据基本信息：')
+df.info()
 
-# 按月份分组
-grouped = df.groupby(pd.Grouper(key="日期", freq="ME"))
+# 查看数据集行数和列数
+rows, columns = df.shape
 
+if rows < 100 and columns < 20:
+    # 短表数据（行数少于100且列数少于20）查看全量数据信息
+    print('数据全部内容信息：')
+    print(df.to_csv(sep='\t', na_rep='nan'))
+else:
+    # 长表数据查看数据前几行信息
+    print('数据前几行内容信息：')
+    print(df.head().to_csv(sep='\t', na_rep='nan'))
 
-# 定义聚合逻辑
-def get_month_start(col):
-    """获取每月第一天的值"""
-    return lambda x: x.loc[x.index.min().replace(day=1)] if not x.empty else None
+# 将日期列转换为日期时间类型
+df['日期'] = pd.to_datetime(df['日期'])
 
+# 提取月份信息
+df['月份'] = df['日期'].dt.to_period('M')
 
-def get_month_end(col):
-    """获取每月最后一天的值"""
-    return lambda x: x.iloc[-1] if not x.empty else None
+# 按月份分组，对赋予、使用、过期和其他扣减列求和，对期初列取每月第一天的值，对期末列取每月最后一天的值
+summary = df.groupby('月份').agg({
+    '期初': lambda x: x.iloc[0],
+    '赋予': 'sum',
+    '使用': 'sum',
+    '过期': 'sum',
+    '其他扣减': 'sum',
+    '期末': lambda x: x.iloc[-1]
+}).reset_index()
 
-
-# 执行聚合计算
-result = grouped.agg({
-    # "期初": get_month_start("期初"),
-    "赋予": "sum",
-    "使用": "sum",
-    "过期": "sum",
-    "其他扣减": "sum",
-    "期末": get_month_end("期末")
-})
-
-# 重置索引并格式化
-result = result.reset_index()
-result["月份"] = result["日期"].dt.strftime("%Y-%m")
-# result = result[["月份", "期初", "赋予", "使用", "过期", "其他扣减", "期末"]]
-result = result[["月份", "赋予", "使用", "过期", "其他扣减", "期末"]]
-
-# 输出结果
-print(result)
-
-# 可选：保存到新Excel文件
-result.to_excel("xlsx/2024年按月汇总数据_output.xlsx", index=False)
+# 将结果保存为 Excel 文件
+summary.to_excel('xlsx/2024年按月汇总数据_output.xlsx', index=False)
