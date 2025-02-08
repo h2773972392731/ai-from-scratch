@@ -5,7 +5,7 @@ import pandas as pd
 # 问豆包，prompt:附件中，请按月汇总赋予，使用，过期，其他扣减列的总金额，但按月汇总后的期初和期末列，期初用当月第一天的期初值，期末用当月最后一天的期末值，请提供python脚本
 
 # 读取文件
-excel_file = pd.ExcelFile('xlsx/2024年按天汇总数据.xlsx')
+excel_file = pd.ExcelFile('xlsx/2024年按天汇总数据_origin.xlsx')
 
 # 获取所有表名
 sheet_names = excel_file.sheet_names
@@ -47,4 +47,4 @@ summary = df.groupby('月份').agg({
 }).reset_index()
 
 # 将结果保存为 Excel 文件
-summary.to_excel('xlsx/2024年按月汇总数据_output.xlsx', index=False)
+summary.to_excel('xlsx/2024年按月汇总数据_豆包_output.xlsx', index=False)
