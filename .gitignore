@@ -164,3 +164,5 @@ cython_debug/
 
 #misc.xml
 #python_project.iml
+
+.DS_Store
