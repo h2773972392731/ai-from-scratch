@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv, find_dotenv
+from zhipuai import ZhipuAI
 
 # 读取本地/项目的环境变量。
 
@@ -7,8 +8,6 @@ from dotenv import load_dotenv, find_dotenv
 # load_dotenv() 读取该 .env 文件，并将其中的环境变量加载到当前的运行环境中
 # 如果你设置的是全局的环境变量，这行代码则没有任何作用。
 _ = load_dotenv(find_dotenv())
-
-from zhipuai import ZhipuAI
 
 client = ZhipuAI(
     api_key=os.environ["ZHIPUAI_API_KEY"]
@@ -22,7 +21,7 @@ def gen_glm_params(prompt):
     请求参数：
         prompt: 对应的用户提示词
     '''
-    messages = [{"role": "system", "content": "你是严厉的."}, {"role": "user", "content": prompt}]
+    messages = [{"role": "system", "content": "你的风格是幽默的."}, {"role": "user", "content": prompt}]
     return messages
 
 
