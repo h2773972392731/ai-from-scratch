@@ -1,4 +1,4 @@
-# 调用LLM的API-讯飞星火-WebSocket
+# 调用LLM的API-讯飞星火-WebSocket  https://console.xfyun.cn/services/bm4   Spark4.0 Ultra
 # 使用 WebSocket 调用 LLM，则需要依赖支持 WebSocket 的接口（例如某些模型提供流式生成的 WebSocket 接口），并且需要编写相应的代码来管理 WebSocket 连接和数据流。
 
 # coding: utf-8
