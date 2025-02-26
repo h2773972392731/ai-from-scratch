@@ -1,6 +1,10 @@
 from openai import OpenAI
+from dotenv import load_dotenv, find_dotenv
+import os
 
-client = OpenAI(api_key="sk-24db43d0275145c3bdc406f6d1d9fdd7", base_url="https://api.deepseek.com/v1")
+_ = load_dotenv(find_dotenv())
+
+client = OpenAI(api_key=os.environ["DEEPSEEK_API_KEY"], base_url="https://api.deepseek.com/v1")
 
 response = client.chat.completions.create(
     model="deepseek-chat",
@@ -11,5 +15,4 @@ response = client.chat.completions.create(
     stream=False
 )
 
-print('...')
 print(response.choices[0].message.content)
