@@ -5,7 +5,7 @@ import pandas as pd
 # 问千问，prompt:附件中，请按月汇总赋予，使用，过期，其他扣减列的总金额，但按月汇总后的期初和期末列，期初用当月第一天的期初值，期末用当月最后一天的期末值，请提供python脚本
 
 # 读取Excel文件
-file_path = 'xlsx/2024年按天汇总数据_origin.xlsx'
+file_path = '../xlsx/2024年按天汇总数据_origin.xlsx'
 df = pd.read_excel(file_path, engine='openpyxl')
 
 # 将日期列转换为datetime类型

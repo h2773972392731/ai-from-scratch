@@ -22,7 +22,7 @@ import json
 
 
 # 加载Excel文件
-wb = load_workbook('xlsx/ods_ic_item_sku_17218746.xlsx')
+wb = load_workbook('../xlsx/ods_ic_item_sku_17218746.xlsx')
 ws = wb['SheetJS']  # 选择你需要的工作表
 
 

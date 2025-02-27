@@ -8,7 +8,7 @@
 import pandas as pd
 
 # 读取Excel文件
-file_path = 'xlsx/订购顾客数明细.xlsx'
+file_path = '../xlsx/订购顾客数明细.xlsx'
 df = pd.read_excel(file_path)
 
 # 将订购日期转换为日期格式
@@ -50,6 +50,6 @@ daily_counts['订购日期'] = daily_counts['订购日期'].dt.strftime('%Y-%m-%
 print(daily_counts)
 
 # 如果需要保存结果到新的Excel文件
-output_file_path = 'xlsx/订购顾客数明细_output.xlsx'
+output_file_path = '../xlsx/订购顾客数明细_output.xlsx'
 daily_counts.to_excel(output_file_path, index=False)
 print(f"结果已保存到 {output_file_path}")
