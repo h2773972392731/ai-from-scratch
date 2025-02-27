@@ -1,5 +1,6 @@
 import os
 from sparkai.llm.llm import ChatSparkLLM, ChunkPrintHandler
+# pip install spark_ai_python
 from sparkai.core.messages import ChatMessage
 from dotenv import load_dotenv, find_dotenv
 
@@ -86,4 +87,5 @@ def get_completion(prompt, model="v4.0", temperature=0.1):
 
 
 # 这里直接打印输出了正常响应内容，在生产环境中，需要兼容处理响应异常的情况
-get_completion("你好").generations[0][0].text
+response = get_completion("你好")
+print(response.generations[0][0].text)
