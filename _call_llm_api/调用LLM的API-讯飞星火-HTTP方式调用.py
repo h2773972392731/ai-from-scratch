@@ -45,6 +45,7 @@ def gen_spark_params(model):
             "spark_url": spark_url_tpl.format("v4.0")  # 云端环境的服务地址
         }
     }
+    print(model_params_dict[model])
     return model_params_dict[model]
 
 
