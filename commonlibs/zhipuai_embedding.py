@@ -3,11 +3,11 @@ from __future__ import annotations
 import logging
 from typing import Dict, List, Any
 
-
 from langchain.embeddings.base import Embeddings
-from langchain.pydantic_v1 import BaseModel, root_validator
+from pydantic import BaseModel, model_validator
 
 logger = logging.getLogger(__name__)
+
 
 class ZhipuAIEmbeddings(BaseModel, Embeddings):
     """`Zhipuai Embeddings` embedding models."""
@@ -15,7 +15,7 @@ class ZhipuAIEmbeddings(BaseModel, Embeddings):
     client: Any
     """`zhipuai.ZhipuAI"""
 
-    @root_validator()
+    @model_validator(mode="before")
     def validate_environment(cls, values: Dict) -> Dict:
         """
         实例化ZhipuAI为values["client"]
@@ -30,14 +30,13 @@ class ZhipuAIEmbeddings(BaseModel, Embeddings):
         from zhipuai import ZhipuAI
         values["client"] = ZhipuAI()
         return values
-    
+
     def _embed(self, texts: str) -> List[float]:
         embeddings = self.client.embeddings.create(
             model="embedding-2",
             input=texts
         )
         return embeddings.data[0].embedding
-    
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
         """
@@ -49,8 +48,7 @@ class ZhipuAIEmbeddings(BaseModel, Embeddings):
             List[List[float]]: 输入列表中每个文档的 embedding 列表。每个 embedding 都表示为一个浮点值列表。
         """
         return [self._embed(text) for text in texts]
-    
-    
+
     def embed_query(self, text: str) -> List[float]:
         """
         生成输入文本的 embedding.
@@ -63,8 +61,6 @@ class ZhipuAIEmbeddings(BaseModel, Embeddings):
         """
         resp = self.embed_documents([text])
         return resp[0]
-
-
 
     async def aembed_documents(self, texts: List[str]) -> List[List[float]]:
         """Asynchronous Embed search docs."""

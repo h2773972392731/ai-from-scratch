@@ -1,18 +1,18 @@
-import sys
-
-# 1. 加载向量数据库
+# import sys
 # sys.path.append("../C3 搭建知识库")  # 将父目录放入系统路径中
 
 # 使用智谱 Embedding API，注意，需要将上一章实现的封装代码下载到本地
 from commonlibs.zhipuai_embedding import ZhipuAIEmbeddings
 
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 
 from dotenv import load_dotenv, find_dotenv
 import os
 from langchain_core.messages import AIMessage
 from langchain_openai import ChatOpenAI
 
+# 1. 加载向量数据库
 _ = load_dotenv(find_dotenv())  # read local .env file
 zhipuai_api_key = os.environ['ZHIPUAI_API_KEY']
 

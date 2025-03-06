@@ -167,6 +167,4 @@ cython_debug/
 
 .DS_Store
 
-_temp.py
-
 /data_base/vector_db/chroma/
