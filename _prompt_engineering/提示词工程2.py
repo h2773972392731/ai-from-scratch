@@ -1,6 +1,4 @@
-import promptEngineering
-
-
+from commonlibs import promptEngineering
 
 # 要求模型检查是否满足条件。满足条件的输入（text_1 中提供了步骤）
 # 如果任务包含不一定能满足的假设（条件），我们可以告诉模型先检查这些假设，如果不满足，则会指 出并停止执行后续的完整流程。您还可以考虑可能出现的边缘情况及模型的应对，以避免意外的结果或 错误发生。

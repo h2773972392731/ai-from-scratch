@@ -1,4 +1,4 @@
-import promptEngineering
+from commonlibs import promptEngineering
 
 # 在接下来这个 Prompt 中，我们要求模型先自行解决这个问题，再根据自己的解法与学生的解法进行对比，从而判断学生的解法是否正确。同时，我们给定了输出的格式要求。通过拆分任务、明确步骤，让 模型有更多时间思考，有时可以获得更准确的结果。
 
