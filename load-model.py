@@ -1,9 +1,14 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
 
-# 加载模型和分词器
-model_name = "E:/playground/chinese-llama-lora-7b/ChineseAlpacaGroup/adapter_model.bin"  # 模型名称
-model = AutoModelForCausalLM.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
+# 加载原始 LLaMA 模型（需要申请访问权限）
+base_model = AutoModelForCausalLM.from_pretrained("meta-llama/LLaMA-2-7b")
+tokenizer = AutoTokenizer.from_pretrained("meta-llama/LLaMA-2-7b")
 
-print(model)
-print(tokenizer)
+# 加载 chinese-llama-lora-7b 的 LoRA 权重
+model = PeftModel.from_pretrained(base_model, "hfl/chinese-llama-lora-7b")
+
+# 测试生成
+inputs = tokenizer("你好，你是谁？", return_tensors="pt")
+outputs = model.generate(**inputs, max_length=50)
+print(tokenizer.decode(outputs[0]))
