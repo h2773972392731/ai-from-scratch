@@ -5,8 +5,8 @@ from peft import PeftModel
 base_model = AutoModelForCausalLM.from_pretrained("meta-llama/LLaMA-2-7b")
 tokenizer = AutoTokenizer.from_pretrained("meta-llama/LLaMA-2-7b")
 
-# 加载 chinese-llama-lora-7b 的 LoRA 权重
-model = PeftModel.from_pretrained(base_model, "hfl/chinese-llama-lora-7b")
+# 加载 Chinese-LLaMA-7B 的 LoRA 权重
+model = PeftModel.from_pretrained(base_model, "hfl/chinese-llama-7b")
 
 # 测试生成
 inputs = tokenizer("你好，你是谁？", return_tensors="pt")
