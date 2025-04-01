@@ -17,6 +17,9 @@ base_model = AutoModelForCausalLM.from_pretrained(
 )
 tokenizer = AutoTokenizer.from_pretrained("hfl/chinese-llama-2-7b")
 
+# 词表大小：55296
+print(f"tokenizer.vocab_size:{tokenizer.vocab_size}")
+
 lora_model = PeftModel.from_pretrained(
     base_model,
     "hfl/chinese-llama-2-lora-7b",
