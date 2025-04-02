@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "<YOUR_TOKEN>"
+      }
+    },
+    "filesystem": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:\\Users\\2000101497\\Desktop"
+      ]
+    },
+    "time": {
+      "command": "python",
+      "args": ["-m", "mcp_server_time", "--local-timezone=Asia/Shanghai"
+      ]
+    }
+  }
+}
