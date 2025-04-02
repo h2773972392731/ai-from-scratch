@@ -9,16 +9,10 @@ API_KEY = os.environ["GEMINI_API_KEY"]
 url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}"
 
 # 请求头
-headers = {
-    "Content-Type": "application/json"
-}
+headers = {"Content-Type": "application/json"}
 
 # 请求体（与 curl 中的 -d 参数对应）
-payload = {
-    "contents": [{
-        "parts": [{"text": "Explain how AI works"}]
-    }]
-}
+payload = {"contents": [{"parts": [{"text": "Explain how AI works"}]}]}
 
 # 发送 POST 请求
 response = requests.post(url, headers=headers, data=json.dumps(payload))
