@@ -1,0 +1,38 @@
+{
+  "mcpServers": {
+    "github.com/modelcontextprotocol/servers/tree/main/src/github": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "time": {
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp_server_time",
+        "--local-timezone=Asia/Shanghai"
+      ]
+    },
+    "youtube": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-youtube"
+      ],
+      "env": {
+        "YOUTUBE_API_KEY": "AIzaSyAJxMA0kbO-hZRFcWmTz_UJl0PLK5_5rjE"
+      }
+    }
+  }
+}
