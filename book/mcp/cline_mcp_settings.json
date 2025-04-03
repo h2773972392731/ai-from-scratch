@@ -14,17 +14,31 @@
       "disabled": false,
       "autoApprove": []
     },
-    "youtube": {
+    "mysql-mcp-server": {
       "command": "cmd",
       "args": [
         "/c",
         "npx",
         "-y",
-        "@kimtaeyoon83/mcp-server-youtube-transcript"
-      ],
-      "env": {
-        "YOUTUBE_API_KEY": "AIzaSyAJxMA0kbO-hZRFcWmTz_UJl0PLK5_5rjE"
-      }
+        "@smithery/cli@latest",
+        "run",
+        "mysql-mcp-server",
+        "--config",
+        "{\"mysqlHost\":\"127.0.0.1\",\"mysqlPort\":\"3306\",\"mysqlUser\":\"root\",\"mysqlDatabase\":\"mydb\",\"mysqlPassword\":\"8023\"}"
+      ]
+    },
+    "mcp-mysql-server": {
+      "command": "cmd",
+      "args": [
+        "/c",
+        "npx",
+        "-y",
+        "@smithery/cli@latest",
+        "run",
+        "@f4ww4z/mcp-mysql-server",
+        "--config",
+        "{\"mysqlHost\":\"127.0.0.1\",\"mysqlUser\":\"root\",\"mysqlDatabase\":\"mydb\",\"mysqlPassword\":\"8023\"}"
+      ]
     }
   }
 }
