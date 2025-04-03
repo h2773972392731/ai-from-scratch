@@ -14,21 +14,13 @@
       "disabled": false,
       "autoApprove": []
     },
-    "time": {
-      "command": "python",
-      "args": [
-        "-m",
-        "mcp_server_time",
-        "--local-timezone=Asia/Shanghai"
-      ]
-    },
     "youtube": {
       "command": "cmd",
       "args": [
         "/c",
         "npx",
         "-y",
-        "@modelcontextprotocol/server-youtube"
+        "@kimtaeyoon83/mcp-server-youtube-transcript"
       ],
       "env": {
         "YOUTUBE_API_KEY": "AIzaSyAJxMA0kbO-hZRFcWmTz_UJl0PLK5_5rjE"
