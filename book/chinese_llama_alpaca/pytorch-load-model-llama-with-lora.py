@@ -14,7 +14,9 @@ quantization_config = BitsAndBytesConfig(
     bnb_4bit_use_double_quant=True,
 )
 
-base_model = AutoModelForCausalLM.from_pretrained("elinas/llama-7b-hf-transformers-4.29")
+base_model = AutoModelForCausalLM.from_pretrained(
+    "elinas/llama-7b-hf-transformers-4.29"
+)
 tokenizer = AutoTokenizer.from_pretrained("elinas/llama-7b-hf-transformers-4.29")
 
 # 加载量化模型
@@ -30,7 +32,9 @@ print(f"tokenizer.vocab_size:{tokenizer.vocab_size}")
 
 # 加载 LoRA 权重
 # 检查点中的 embed_tokens 和 lm_head 权重形状为 [49953, 4096]
-lora_model = PeftModel.from_pretrained(base_model, "hfl/chinese-llama-lora-7b", ignore_mismatched_sizes=True)   # 忽略 modules_to_save 的权重：跳过加载 embed_tokens 和 lm_head 的权重，仅加载 LoRA 参数（target_modules 的权重）
+lora_model = PeftModel.from_pretrained(
+    base_model, "hfl/chinese-llama-lora-7b", ignore_mismatched_sizes=True
+)  # 忽略 modules_to_save 的权重：跳过加载 embed_tokens 和 lm_head 的权重，仅加载 LoRA 参数（target_modules 的权重）
 
 # LoRA 检查点文件（adapter_model.bin）包含 embed_tokens 和 lm_head 的权重 torch.Size([49953, 4096])
 # checkpoint = torch.load("E:/models/huggingface_models/huggingface/hub/models--hfl--chinese-llama-lora-7b/snapshots/b5e520ae0a1282c6105a72ad6063a3b3de211067/adapter_model.bin", map_location="cpu")
